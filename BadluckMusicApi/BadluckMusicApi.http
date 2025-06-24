@@ -1,0 +1,6 @@
+@BadluckMusicApi_HostAddress = http://localhost:5180
+
+GET {{BadluckMusicApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
