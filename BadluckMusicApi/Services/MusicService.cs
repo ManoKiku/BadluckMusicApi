@@ -52,14 +52,11 @@ namespace BadluckMusicApi.Services
             var query = _context.Musics.AsQueryable();
 
             if (hobbyIds?.Any() == true)
-            {
                 query = query.Where(m => m.MusicHobbys.Any(mh => hobbyIds.Contains(mh.HobbyId)));
-            }
+            
 
             if (moodIds?.Any() == true)
-            {
                 query = query.Where(m => m.MusicMoods.Any(mm => moodIds.Contains(mm.MoodId)));
-            }
 
             return await query
                 .Include(x => x.MusicMoods)

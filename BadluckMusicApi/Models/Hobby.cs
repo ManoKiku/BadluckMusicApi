@@ -6,6 +6,6 @@
         public string Name { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
 
-        public IEnumerable<MusicHobby> MusicHobbys { get; set; }
+        public IEnumerable<MusicHobby> MusicHobbies { get; set; }
     }
 }

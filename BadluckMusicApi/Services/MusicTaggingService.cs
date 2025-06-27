@@ -18,9 +18,21 @@ namespace BadluckMusicApi.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task AddMusicHobbiesAsync(IEnumerable<MusicHobby> hobbies)
+        {
+            await _context.MusicHobbies.AddRangeAsync(hobbies);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task AddMusicMoodAsync(MusicMood mood)
         {
             await _context.MusicMoods.AddAsync(mood);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddMusicMoodsAsync(IEnumerable<MusicMood> moods)
+        {
+            await _context.MusicMoods.AddRangeAsync(moods);
             await _context.SaveChangesAsync();
         }
 

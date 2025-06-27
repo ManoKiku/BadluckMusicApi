@@ -22,7 +22,8 @@ builder.Services
     .AddScoped<IMusicService, MusicService>()
     .AddScoped<IAuthorService, AuthorService>()
     .AddScoped<ITagService, TagService>()
-    .AddScoped<IMusicTaggingService, MusicTaggingService>();
+    .AddScoped<IMusicTaggingService, MusicTaggingService>()
+    .AddScoped<IFileService, LocalFileService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
