@@ -1,6 +1,8 @@
-﻿using BadluckMusicApi.Models;
+﻿using BadluckMusicApi.Helpers;
+using BadluckMusicApi.Models;
+using BadluckMusicApi.Models.DB;
+using BadluckMusicApi.Models.ViewModels;
 using BadluckMusicApi.Services;
-using BadluckMusicApi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +10,7 @@ namespace BadluckMusicApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MusicController : Controller
+    public class MusicController : ControllerBase
     {
         private readonly IMusicService _musicService;
         private readonly IMusicTaggingService _taggingService;
@@ -35,30 +37,14 @@ namespace BadluckMusicApi.Controllers
 
                 if (music == null || !music.Any())
                 {
-                    return NotFound(new
-                    {
-                        Status = "error",
-                        Message = "No music"
-                    });
+                    return ApiResponseHelper.NotFoundError("No musci was founded");
                 }
 
-                return Ok(new
-                {
-                    Status = "success",
-                    Message = "Music was fetched",
-                    Music = music
-                });
-
+                return ApiResponseHelper.Success("Music was fetched", music);
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new
-                    {
-                        Status = "error",
-                        Message = "Error while fetching music"
-                    });
+                return ApiResponseHelper.ServerError(_logger, ex, "Error while fetching music");
             }
         }
 
@@ -69,32 +55,16 @@ namespace BadluckMusicApi.Controllers
             {
                 var music = await _musicService.GetSortedMusicAsync(hobbyIds, moodIds);
 
-                if (music.Count() == 0)
+                if (!music.Any())
                 {
-                    return NotFound(new
-                    {
-                        Status = "error",
-                        Message = "No music with such parameters"
-                    });
+                    return ApiResponseHelper.NotFoundError("No music with such parameters");
                 }
 
-                return Ok(new
-                {
-                    Status = "success",
-                    Message = "Music was fetched",
-                    Music = music
-                });
-
+                return ApiResponseHelper.Success("Music was fetched", music);
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new
-                    {
-                        Status = "error",
-                        Message = "Error while fetching music"
-                    });
+                return ApiResponseHelper.ServerError(_logger, ex, "Error while fetching music");
             }
         }
 
@@ -107,30 +77,14 @@ namespace BadluckMusicApi.Controllers
 
                 if (music == null)
                 {
-                    return NotFound(new
-                    {
-                        Status = "error",
-                        Message = "No music with such id"
-                    });
+                    return ApiResponseHelper.BadRequest("No music with such id");
                 }
 
-                return Ok(new
-                {
-                    Status = "success",
-                    Message = "Music was fetched",
-                    Music = music
-                });
-
+                return ApiResponseHelper.Success("Music was fetched", music);
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new
-                    {
-                        Status = "error",
-                        Message = "Error while fetching music"
-                    });
+                return ApiResponseHelper.ServerError(_logger, ex, "Error while fetching music");
             }
         }
 
@@ -140,15 +94,7 @@ namespace BadluckMusicApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    Status = "error",
-                    Message = "There is validation errors in model",
-                    Errors = ModelState.ToDictionary(
-                        k => k.Key,
-                        v => v.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-                    )
-                });
+                return ApiResponseHelper.ValidationError(ModelState);
             }
 
             string musicPath = $"data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
@@ -183,12 +129,7 @@ namespace BadluckMusicApi.Controllers
                 if (model.MoodIds != null && model.MoodIds.Any())
                     await _taggingService.AddMusicMoodsAsync(model.MoodIds.Select(x => new MusicMood { MoodId = x, MusicId = music.Id }));
 
-                return Ok(new
-                {
-                    Status = "success",
-                    Message = "New music was added",
-                    MusicId = music.Id
-                });
+                return ApiResponseHelper.Success("New music was added", music.Id);
             }
             catch(Exception ex)
             {
@@ -218,13 +159,7 @@ namespace BadluckMusicApi.Controllers
                     _logger.LogError(rollbackEx, "Error during rollback operations");
                 }
 
-                _logger.LogWarning(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new
-                    {
-                        Status = "error",
-                        Message = "Error while adding new music"
-                    });
+                return ApiResponseHelper.ServerError(_logger, ex, "Error while adding new music");
             }
         }
 
@@ -235,33 +170,19 @@ namespace BadluckMusicApi.Controllers
             var music = await _musicService.GetMusicAsync(id);
 
             if (music == null)
-                return BadRequest(new
-                {
-                    Status = "error",
-                    Message = "No music with such id"
-                });
+                return ApiResponseHelper.BadRequest("No music with such id");
 
             try
             {
                 await _fileService.DeleteFileAsync(music.MusicPath);
-                await _fileService.DeleteFileAsync(music.MusicPath);
+                await _fileService.DeleteFileAsync(music.ImagePath);
                 await _musicService.DeleteMusicAsync(id);
 
-                return Ok(new
-                {
-                    Status = "success",
-                    Message = "Music was deleted"
-                });
+                return ApiResponseHelper.Success("Music was deleted");
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new
-                    {
-                        Status = "error",
-                        Message = "Error while deleting music"
-                    });
+                return ApiResponseHelper.ServerError(_logger, ex, "Error while deleting music");
             }
         }
 
@@ -271,25 +192,13 @@ namespace BadluckMusicApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    Status = "error",
-                    Message = "There is validation errors in model",
-                    Errors = ModelState.ToDictionary(
-                        k => k.Key,
-                        v => v.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-                    )
-                });
+                return ApiResponseHelper.ValidationError(ModelState);
             }
 
             var music = await _musicService.GetMusicAsync(id);
 
             if (music == null)
-                return BadRequest(new
-                {
-                    Status = "error",
-                    Message = "No music with such id"
-                });
+                return ApiResponseHelper.BadRequest("No music with such id");
 
             string? musicPath = null;
             string? coverPath = null;
@@ -325,21 +234,11 @@ namespace BadluckMusicApi.Controllers
 
                 await _musicService.UpdateMusicAsync(music);
 
-                return Ok(new
-                {
-                    Status = "success",
-                    Message = "Music was updated"
-                });
+                return ApiResponseHelper.Success("Music was updated");
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new
-                    {
-                        Status = "error",
-                        Message = "Error while updating music"
-                    });
+                return ApiResponseHelper.ServerError(_logger, ex, "Error while updating music");
             }
         }
     }

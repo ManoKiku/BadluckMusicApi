@@ -1,7 +1,7 @@
 ﻿using BadluckMusicApi.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace BadluckMusicApi.ViewModels
+namespace BadluckMusicApi.Models.ViewModels
 {
     public class AddMusicViewModel
     {

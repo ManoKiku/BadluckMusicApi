@@ -1,4 +1,4 @@
-﻿namespace BadluckMusicApi.Models
+﻿namespace BadluckMusicApi.Models.DB
 {
     public class Hobby
     {

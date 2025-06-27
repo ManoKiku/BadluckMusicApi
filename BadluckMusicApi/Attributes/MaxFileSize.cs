@@ -11,7 +11,7 @@ namespace BadluckMusicApi.Attributes
             _maxSize = maxSizeInMB * 1024 * 1024;
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value is not IFormFile file)
                 return new ValidationResult($"Invalid data type. Required 'IFormFile'.");

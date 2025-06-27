@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace BadluckMusicApi.Models
+namespace BadluckMusicApi.Models.DB
 {
     public class User : IdentityUser
     {

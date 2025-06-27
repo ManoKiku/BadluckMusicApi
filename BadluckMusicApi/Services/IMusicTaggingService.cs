@@ -1,4 +1,4 @@
-﻿using BadluckMusicApi.Models;
+﻿using BadluckMusicApi.Models.DB;
 
 namespace BadluckMusicApi.Services
 {

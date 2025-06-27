@@ -11,7 +11,7 @@ namespace BadluckMusicApi.Attributes
             _extensions = extensions;
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value is not IFormFile file)
                 return new ValidationResult("Неверный тип данных. Ожидается значение IFormFile.");

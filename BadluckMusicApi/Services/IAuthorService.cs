@@ -1,4 +1,4 @@
-﻿using BadluckMusicApi.Models;
+﻿using BadluckMusicApi.Models.DB;
 
 namespace BadluckMusicApi.Services
 {
@@ -9,5 +9,4 @@ namespace BadluckMusicApi.Services
         Task UpdateAuthorAsync(Author author);
         Task DeleteAuthorAsync(int id);
     }
-
 }
