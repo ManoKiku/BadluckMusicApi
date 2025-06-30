@@ -8,6 +8,9 @@ namespace BadluckMusicApi.Attributes
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
+            if (value == null)
+                return ValidationResult.Success;
+
             if (value is not int id || id <= 0)
                 return new ValidationResult("Incorrect author id");
 

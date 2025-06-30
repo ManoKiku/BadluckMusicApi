@@ -10,13 +10,13 @@ namespace BadluckMusicApi.Models.ViewModels
         public required string Title { get; set; }
 
         [Required]
-        [AllowedExtensions(["mp3", "wav"])]
-        [MaxFileSize(10 * 1024 * 1024)]
+        [AllowedExtensions([".mp3", ".wav"])]
+        [MaxFileSize(10)]
         public required IFormFile MusicFile { get; set; }
 
         [Required]
-        [AllowedExtensions(["jpg", "png"])]
-        [MaxFileSize(5 * 1024 * 1024)]
+        [AllowedExtensions([".jpg", ".png"])]
+        [MaxFileSize(5)]
         public required IFormFile CoverFile { get; set; }
 
         [Required]

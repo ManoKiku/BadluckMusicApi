@@ -3,7 +3,7 @@ using BadluckMusicApi.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args   );
 
 string connectionString = builder.Configuration.GetConnectionString("DB")
     ?? throw new ArgumentException("No connection string provided!");
@@ -55,6 +55,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 
 app.MapControllers();
 

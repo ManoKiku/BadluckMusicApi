@@ -97,8 +97,8 @@ namespace BadluckMusicApi.Controllers
                 return ApiResponseHelper.ValidationError(ModelState);
             }
 
-            string musicPath = $"data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
-            string coverPath = $"data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
+            string musicPath = $"/data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
+            string coverPath = $"/data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
             Music? music = null;
 
             try
@@ -204,10 +204,10 @@ namespace BadluckMusicApi.Controllers
             string? coverPath = null;
 
             if(model.MusicFile != null)
-                musicPath = $"data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
+                musicPath = $"/data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
 
             if(model.CoverFile != null)
-                coverPath = $"data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
+                coverPath = $"/data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
 
             try
             {

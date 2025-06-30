@@ -13,8 +13,11 @@ namespace BadluckMusicApi.Attributes
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
+            if(value == null)
+                return ValidationResult.Success;
+
             if (value is not IFormFile file)
-                return new ValidationResult("Неверный тип данных. Ожидается значение IFormFile.");
+                return new ValidationResult("Invalid data type. Required 'IFormFile'.");
 
             string? extension = Path.GetExtension(file.FileName);
 
@@ -24,7 +27,7 @@ namespace BadluckMusicApi.Attributes
             }
             else
             {
-                return new ValidationResult($"Тип файла '{extension ?? "null"}' не находится в списке поддерживаемых расширений: {string.Join("," ,_extensions)}");
+                return new ValidationResult($"File exteinsion '{extension ?? "null"}' isnt in list of available extensions: {string.Join("," ,_extensions)}");
             }
         }
     }
