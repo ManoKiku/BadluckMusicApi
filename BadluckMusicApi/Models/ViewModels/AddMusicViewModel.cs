@@ -15,7 +15,7 @@ namespace BadluckMusicApi.Models.ViewModels
         public required IFormFile MusicFile { get; set; }
 
         [Required]
-        [AllowedExtensions([".jpg", ".png"])]
+        [AllowedExtensions([".jpg", ".png", ".webp"])]
         [MaxFileSize(5)]
         public required IFormFile CoverFile { get; set; }
 

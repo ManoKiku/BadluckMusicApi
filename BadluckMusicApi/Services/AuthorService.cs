@@ -31,6 +31,11 @@ namespace BadluckMusicApi.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Author>> GetAllAuthorsAsync()
+        {
+            return await _context.Authors.ToListAsync();
+        }
+
         public Task<Author?> GetAuthorAsync(int id)
         {
             return _context.Authors.FirstOrDefaultAsync(x => x.Id == id);

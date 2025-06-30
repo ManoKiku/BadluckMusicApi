@@ -13,7 +13,7 @@ namespace BadluckMusicApi.Attributes
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if(value == null)
+            if (value == null)
                 return ValidationResult.Success;
 
             if (value is not IFormFile file)
