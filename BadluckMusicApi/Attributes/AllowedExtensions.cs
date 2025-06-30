@@ -27,7 +27,7 @@ namespace BadluckMusicApi.Attributes
             }
             else
             {
-                return new ValidationResult($"Data type '{extension ?? "null"}' is not in available list: {string.Join("," ,_extensions)}");
+                return new ValidationResult($"File exteinsion '{extension ?? "null"}' isnt in list of available extensions: {string.Join("," ,_extensions)}");
             }
         }
     }

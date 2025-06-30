@@ -106,8 +106,8 @@ namespace BadluckMusicApi.Controllers
                 return ApiResponseHelper.ValidationError(ModelState);
             }
 
-            string musicPath = $"data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
-            string coverPath = $"data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
+            string musicPath = $"/data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
+            string coverPath = $"/data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
             Music? music = null;
 
             try
