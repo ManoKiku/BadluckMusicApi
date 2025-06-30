@@ -40,7 +40,10 @@ namespace BadluckMusicApi.Controllers
                     return ApiResponseHelper.NotFoundError("No musci was founded");
                 }
 
-                return ApiResponseHelper.Success("Music was fetched", music);
+                return ApiResponseHelper.Success("Music was fetched", new
+                {
+                    Musics = music
+                });
             }
             catch (Exception ex)
             {
@@ -60,7 +63,10 @@ namespace BadluckMusicApi.Controllers
                     return ApiResponseHelper.NotFoundError("No music with such parameters");
                 }
 
-                return ApiResponseHelper.Success("Music was fetched", music);
+                return ApiResponseHelper.Success("Music was fetched", new
+                {
+                    Musics = music
+                });
             }
             catch (Exception ex)
             {
@@ -80,7 +86,10 @@ namespace BadluckMusicApi.Controllers
                     return ApiResponseHelper.BadRequest("No music with such id");
                 }
 
-                return ApiResponseHelper.Success("Music was fetched", music);
+                return ApiResponseHelper.Success("Music was fetched", new
+                {
+                    Music = music
+                });
             }
             catch (Exception ex)
             {
@@ -129,7 +138,10 @@ namespace BadluckMusicApi.Controllers
                 if (model.MoodIds != null && model.MoodIds.Any())
                     await _taggingService.AddMusicMoodsAsync(model.MoodIds.Select(x => new MusicMood { MoodId = x, MusicId = music.Id }));
 
-                return ApiResponseHelper.Success("New music was added", music.Id);
+                return ApiResponseHelper.Success("New music was added", new
+                {
+                    MusicId = music.Id
+                });
             }
             catch(Exception ex)
             {
@@ -198,7 +210,9 @@ namespace BadluckMusicApi.Controllers
             var music = await _musicService.GetMusicAsync(id);
 
             if (music == null)
+            {
                 return ApiResponseHelper.BadRequest("No music with such id");
+            }
 
             string? musicPath = null;
             string? coverPath = null;
@@ -214,16 +228,20 @@ namespace BadluckMusicApi.Controllers
                 await _fileService.DeleteFileAsync(music.MusicPath);
                 await _fileService.DeleteFileAsync(music.MusicPath);
 
-                if (musicPath != null && !await _fileService.UploadFileAsync(model.MusicFile!.OpenReadStream(), musicPath))
+                if (musicPath != null)
                 {
+                    if(!await _fileService.UploadFileAsync(model.MusicFile!.OpenReadStream(), musicPath))
+                        throw new IOException("Error while uploading music file");
+
                     music.MusicPath = musicPath;
-                    throw new IOException("Error while uploading music file");
                 }
 
-                if (coverPath != null && !await _fileService.UploadFileAsync(model.CoverFile!.OpenReadStream(), coverPath))
+                if (coverPath != null)
                 {
+                    if(!await _fileService.UploadFileAsync(model.CoverFile!.OpenReadStream(), coverPath))
+                        throw new IOException("Error while uploading cover file");
+
                     music.ImagePath = coverPath;
-                    throw new IOException("Error while uploading cover file");
                 }
 
                 if(model.Title != null)

@@ -6,6 +6,7 @@ namespace BadluckMusicApi.Services
     {
         Task<Author> AddAuthorAsync(Author author);
         Task<Author?> GetAuthorAsync(int id);
+        Task<IEnumerable<Author>> GetAllAuthorsAsync();
         Task UpdateAuthorAsync(Author author);
         Task DeleteAuthorAsync(int id);
     }

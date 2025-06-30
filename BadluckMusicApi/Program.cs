@@ -32,7 +32,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services
     .AddScoped<IMusicService, MusicService>()
     .AddScoped<IAuthorService, AuthorService>()
-    .AddScoped<ITagService, TagService>()
+    .AddScoped<IMoodService, TagService>()
+    .AddScoped<IHobbyService, TagService>()
     .AddScoped<IMusicTaggingService, MusicTaggingService>()
     .AddScoped<IFileService, LocalFileService>()
     .AddScoped<IAuthService, IdentityAuthService>();

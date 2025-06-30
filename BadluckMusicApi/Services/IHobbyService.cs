@@ -2,13 +2,12 @@
 
 namespace BadluckMusicApi.Services
 {
-    public interface ITagService
+    public interface IHobbyService
     {
+        Task<Hobby?> GetHobbyAsync(int id);
+        Task<IEnumerable<Hobby>> GetAllHobbiesAsync();
         Task<Hobby> AddHobbyAsync(Hobby hobby);
-        Task<Mood> AddMoodAsync(Mood mood);
         Task DeleteHobbyAsync(int id);
-        Task DeleteMoodAsync(int id);
         Task UpdateHobbyAsync(Hobby hobby);
-        Task UpdateMoodAsync(Mood mood);
     }
 }
