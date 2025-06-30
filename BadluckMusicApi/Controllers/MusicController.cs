@@ -175,7 +175,7 @@ namespace BadluckMusicApi.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteMusicAsync(int id)
         {
@@ -218,10 +218,10 @@ namespace BadluckMusicApi.Controllers
             string? coverPath = null;
 
             if(model.MusicFile != null)
-                musicPath = $"data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
+                musicPath = $"/data/music/{Guid.NewGuid()}{Path.GetExtension(model.MusicFile.FileName)}";
 
             if(model.CoverFile != null)
-                coverPath = $"data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
+                coverPath = $"/data/covers/{Guid.NewGuid()}{Path.GetExtension(model.CoverFile.FileName)}";
 
             try
             {

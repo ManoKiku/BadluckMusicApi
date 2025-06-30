@@ -76,7 +76,7 @@ namespace BadluckMusicApi.Controllers
                 return ApiResponseHelper.ValidationError(ModelState);
             }
 
-            string imagePath = $"data/authors/{Guid.NewGuid()}{Path.GetExtension(model.Image.FileName)}";
+            string imagePath = $"/data/authors/{Guid.NewGuid()}{Path.GetExtension(model.Image.FileName)}";
             Author? author = null;
 
             try
@@ -127,7 +127,7 @@ namespace BadluckMusicApi.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAuthorAsync(int id)
         {
@@ -169,7 +169,7 @@ namespace BadluckMusicApi.Controllers
             string? imagePath = null;
 
             if (model.ImageFile != null)
-                imagePath = $"data/authors/{Guid.NewGuid()}{Path.GetExtension(model.ImageFile.FileName)}";
+                imagePath = $"/data/authors/{Guid.NewGuid()}{Path.GetExtension(model.ImageFile.FileName)}";
 
             try
             {
