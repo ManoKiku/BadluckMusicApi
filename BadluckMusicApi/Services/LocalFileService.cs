@@ -28,7 +28,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка при удалении файла {FilePath}", filePath);
+                _logger.LogError(ex, "Error while deleting file {FilePath}", filePath);
                 return false;
             }
         }
@@ -45,7 +45,7 @@
         {
             if (stream == null || stream.Length == 0 || string.IsNullOrEmpty(destinationPath))
             {
-                _logger.LogWarning("Некорректные параметры для загрузки файла");
+                _logger.LogWarning("Incorrect parameters");
                 return false;
             }
 
@@ -68,7 +68,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка при сохранении файла {DestinationPath}", destinationPath);
+                _logger.LogError(ex, "Error while uploading file {DestinationPath}", destinationPath);
                 return false;
             }
         }

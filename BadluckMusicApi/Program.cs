@@ -1,7 +1,11 @@
 using BadluckMusicApi.Models.DB;
+using BadluckMusicApi.Models.Entities;
 using BadluckMusicApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args   );
 

@@ -1,5 +1,4 @@
 ﻿using BadluckMusicApi.Helpers;
-using BadluckMusicApi.Models;
 using BadluckMusicApi.Models.DB;
 using BadluckMusicApi.Models.ViewModels;
 using BadluckMusicApi.Services;
@@ -37,7 +36,7 @@ namespace BadluckMusicApi.Controllers
 
                 if (music == null || !music.Any())
                 {
-                    return ApiResponseHelper.NotFoundError("No musci was founded");
+                    return ApiResponseHelper.NotFoundError("No music was founded");
                 }
 
                 return ApiResponseHelper.Success("Music was fetched", new
